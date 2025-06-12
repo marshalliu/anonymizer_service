@@ -1,0 +1,103 @@
+# config.yaml
+
+# A secret key used for encryption in the reversible anonymizer.
+# IMPORTANT: Keep this key safe and secret. Anyone with this key can deanonymize the data.
+# Generate a new one for production use (e.g., using `secrets.token_hex(16)` in Python).
+anonymization_key: "it is a very strange key for demo"
+
+# List of ISO 639-1 language codes to support.
+# The script will download the corresponding spaCy models.
+languages:
+  - 'en'
+  - 'zh'
+  - 'fr'
+
+# Automatically detect language for each text line
+# If false, uses first language in supported_languages list
+auto_detect_language: true
+
+# Minimum confidence threshold for entity detection (0.0 to 1.0)
+# Higher values = more precise but may miss some entities
+# Lower values = more entities detected but may include false positives
+confidence_threshold: 0.6
+
+# Standard Presidio entity types to detect and anonymize.
+pii_entities:
+  - "PERSON"
+  - "PERSON_NAME"
+  - "PHONE_NUMBER"
+  - "EMAIL_ADDRESS"
+  - "LOCATION"
+  - "DATE_TIME"
+  - "CREDIT_CARD"
+  - "ORGANIZATION"
+  - "FAC"
+  - "IP_ADDRESS"
+  - "URL"
+  - "US_SSN"
+
+# Custom regular expressions for corporation-specific sensitive content.
+custom_entities:
+  # SESA ID pattern (e.g., SESA123451)
+  - name: "SESA_ID"
+    regex: "SESA\\d{3-6}"
+    score: 0.9
+    language: "en"
+
+  # Schneider related pattern (e.g., 施耐德)
+  - name: "CORP_NAME"
+    regex: "施耐德"
+    score: 0.9
+    language: "zh"
+
+  # Schneider related pattern (e.g., Schneider)
+  - name: "CORP_NAME"
+    regex: "Schneider"
+    score: 0.9
+    language: "en"
+
+  # Schneider related pattern (e.g., Schneider)
+  - name: "CORP_NAME"
+    regex: "Schneider"
+    score: 0.9
+    language: "fr"
+
+  - name: "INTERNAL_TICKET"
+    regex: "\\b(JIRA|TICKET)-[0-9]+\\b"
+    score: 0.75
+
+  # Customer reference numbers (e.g., CUST_REF_123456)
+  - name: "CUSTOMER_REF"
+    regex: "CUST_REF_\\d{6}"
+    score: 0.9
+    language: "en"
+    
+  # Department codes (e.g., DEPT_HR, DEPT_IT)
+  - name: "DEPARTMENT_CODE"
+    regex: "DEPT_[A-Z]{2,4}"
+    score: 0.8
+    language: "en"
+    
+  # French social security numbers (e.g., 1 85 03 75 116 001 52)
+  - name: "FR_SOCIAL_SECURITY"
+    regex: "[12]\\s\\d{2}\\s\\d{2}\\s\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{2}"
+    score: 0.9
+    language: "fr"
+    
+  # Chinese ID card numbers (e.g., 110101199003073210)
+  - name: "CN_ID_CARD"
+    regex: "\\d{17}[0-9X]"
+    score: 0.9
+    language: "zh"
+    
+  # Chinese phone numbers (e.g., 138-0013-8000)
+  - name: "CN_PHONE"
+    regex: "1[3-9]\\d-\\d{4}-\\d{4}"
+    score: 0.8
+    language: "zh"
+
+  # Chinese phone numbers (e.g., 13800138000)
+  - name: "CN_PHONE"
+    regex: "1[3-9]\\d{9}"
+    score: 0.8
+    language: "zh"
