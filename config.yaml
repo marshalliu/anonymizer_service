@@ -38,30 +38,6 @@ pii_entities:
 
 # Custom regular expressions for corporation-specific sensitive content.
 custom_entities:
-  # SESA ID pattern (e.g., SESA123451)
-  - name: "SESA_ID"
-    regex: "SESA\\d{3-6}"
-    score: 0.9
-    language: "en"
-
-  # Schneider related pattern (e.g., 施耐德)
-  - name: "CORP_NAME"
-    regex: "施耐德"
-    score: 0.9
-    language: "zh"
-
-  # Schneider related pattern (e.g., Schneider)
-  - name: "CORP_NAME"
-    regex: "Schneider"
-    score: 0.9
-    language: "en"
-
-  # Schneider related pattern (e.g., Schneider)
-  - name: "CORP_NAME"
-    regex: "Schneider"
-    score: 0.9
-    language: "fr"
-
   - name: "INTERNAL_TICKET"
     regex: "\\b(JIRA|TICKET)-[0-9]+\\b"
     score: 0.75
